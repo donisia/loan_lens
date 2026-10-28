@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LoanLens · Understand before you borrow</title>
+  <meta name="description" content="See what a loan really costs before you sign. LoanLens explains loan offers in plain language.">
+  <meta name="theme-color" content="#240B3D">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="glow glow-1" aria-hidden="true"></div>
+    <div class="glow glow-2" aria-hidden="true"></div>
+
+    <nav class="nav">
+      <a class="brand" href="/" aria-label="LoanLens home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="14" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="3"/>
+          <path d="M21 21l7 7" stroke="#F472B6" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M10 15.5l3 3 5.5-6.5" fill="none" stroke="#F472B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Loan<strong>Lens</strong></span>
+      </a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#learn">Loan words</a>
+        <span class="nav-pill">Free · Private · No sign-up</span>
+      </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot" aria-hidden="true"></span> Built for borrowers in East Africa</span>
+        <h1>Understand before<br>you <span class="accent">borrow.</span></h1>
+        <p>Paste a loan SMS or upload the agreement. LoanLens shows what you will really receive, what you will repay, and what the lender has not told you.</p>
+        <ul class="hero-points">
+          <li><span aria-hidden="true">✓</span> True cost, including hidden fees</li>
+          <li><span aria-hidden="true">✓</span> Compare offers side by side</li>
+          <li><span aria-hidden="true">✓</span> English or Kiswahili</li>
+        </ul>
+      </div>
+
+      <div class="preview" aria-hidden="true">
+        <div class="preview-card">
+          <div class="preview-head">
+            <div>
+              <div class="preview-title">QuickPesa loan</div>
+              <div class="preview-sub">KES 30,000 · 16 weekly payments</div>
+            </div>
+            <div class="preview-ring">4/7</div>
+          </div>
+          <div class="preview-stats">
+            <div><span>You receive</span><strong>KES 28,500</strong></div>
+            <div><span>You repay</span><strong>KES 38,837</strong></div>
+          </div>
+          <div class="preview-bar"><i style="width:73%"></i><i style="width:23%"></i><i style="width:4%"></i></div>
+          <div class="preview-flags">
+            <span class="flag warn">? Insurance fee not stated</span>
+            <span class="flag bad">! Weekly payment doesn't add up</span>
+          </div>
+        </div>
+        <div class="float-chip chip-1"><strong>634%</strong> yearly cost rate</div>
+        <div class="float-chip chip-2">💬 5 questions to ask</div>
+      </div>
+    </div>
+
+    <div class="mode-switch" role="tablist" aria-label="How do you want to check your loan?">
+      <button class="mode-tab active" role="tab" aria-selected="true" aria-controls="panel-ask" id="tab-ask">
+        <span class="mode-icon" aria-hidden="true">✦</span>
+        <span><strong>Paste or upload an offer</strong><small>LoanLens AI reads it for you</small></span>
+      </button>
+      <button class="mode-tab" role="tab" aria-selected="false" aria-controls="panel-manual" id="tab-manual">
+        <span class="mode-icon" aria-hidden="true">✎</span>
+        <span><strong>Enter the terms myself</strong><small>Compare up to 4 offers</small></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- AI mode -->
+    <section class="panel card" id="panel-ask" role="tabpanel" aria-labelledby="tab-ask">
+      <div id="ai-warning" class="notice" hidden>
+        The AI assistant is not switched on for this server yet. You can still <button type="button" class="link" data-switch="manual">enter the terms yourself</button>.
+      </div>
+      <form id="ask-form">
+        <label class="field-label" for="offer-text">Your loan offer</label>
+        <textarea id="offer-text" rows="7" placeholder="Paste the SMS, email or loan terms here. You can paste more than one offer to compare them."></textarea>
+
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Attach a PDF, photo or text file of the offer">
+          <input type="file" id="file-input" accept=".pdf,.txt,.png,.jpg,.jpeg,.webp,.gif" multiple hidden>
+          <span class="drop-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0l-4 4m4-4l4 4M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><strong>Attach the agreement</strong> or a photo of it<br><small>PDF, image or text · up to 10 MB</small></span>
+        </div>
+        <ul class="file-list" id="file-list"></ul>
+
+        <div class="form-row">
+          <label class="inline-field">
+            <span>Explain in</span>
+            <select id="language">
+              <option>English</option>
+              <option>Kiswahili</option>
+            </select>
+          </label>
+          <div class="actions">
+            <button type="button" class="btn btn-ghost" id="sample-sms">Try a sample offer</button>
+            <button type="submit" class="btn btn-primary" id="ask-submit">Check this loan →</button>
+          </div>
+        </div>
+        <p class="privacy">🔒 LoanLens does not store your documents. Remove names, ID and account numbers before uploading if you can.</p>
+      </form>
+    </section>
+
+    <!-- Manual mode -->
+    <section class="panel card" id="panel-manual" role="tabpanel" aria-labelledby="tab-manual" hidden>
+      <form id="manual-form" novalidate>
+        <div id="offer-forms"></div>
+        <div class="form-row">
+          <button type="button" class="btn btn-ghost" id="add-offer">+ Add another offer to compare</button>
+          <div class="actions">
+            <button type="button" class="btn btn-ghost" id="load-samples">Load example offers</button>
+            <button type="submit" class="btn btn-primary">Calculate true cost →</button>
+          </div>
+        </div>
+        <p class="privacy">Leave a box empty if the lender did not tell you. LoanLens will show it as missing rather than guess.</p>
+      </form>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+    <section id="results" aria-live="polite"></section>
+
+    <section class="how" id="how">
+      <p class="section-title">How it works</p>
+      <h2>Three steps to a loan you understand</h2>
+      <ol class="steps">
+        <li class="step">
+          <span class="step-icon" aria-hidden="true">📩</span>
+          <h3>Share the offer</h3>
+          <p>Paste the SMS, upload the agreement or a photo, or type in the terms yourself.</p>
+        </li>
+        <li class="step">
+          <span class="step-icon" aria-hidden="true">🧮</span>
+          <h3>LoanLens checks the maths</h3>
+          <p>Every fee, the interest method and the repayment timing go into one honest yearly cost.</p>
+        </li>
+        <li class="step">
+          <span class="step-icon" aria-hidden="true">🗣️</span>
+          <h3>Know what to ask</h3>
+          <p>See what's missing or doesn't add up, and get the exact questions to ask before you sign.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="learn" id="learn">
+      <p class="section-title">Loan words, explained simply</p>
+      <h2>Don't let jargon cost you money</h2>
+      <div class="glossary">
+        <details id="term-principal" class="term"><summary>Loan amount (principal)</summary>
+          <p>The amount the loan agreement is written for. You may receive less than this if fees are taken out first.</p></details>
+        <details id="term-received" class="term"><summary>Amount you receive</summary>
+          <p>The money that actually reaches your phone or account after deductions. Always ask for this number.</p>
+          <p class="example">Example: a KES 30,000 loan with a 5% fee taken out gives you KES 28,500.</p></details>
+        <details id="term-flat" class="term"><summary>Flat rate</summary>
+          <p>Interest is charged on the full original amount for the whole loan, even after you have repaid most of it. A flat rate costs much more than the same number on a reducing balance.</p>
+          <p class="example">10% a month flat on KES 10,000 for 4 months is KES 4,000 in interest.</p></details>
+        <details id="term-reducing" class="term"><summary>Reducing balance</summary>
+          <p>Interest is charged only on what you still owe, so each payment's interest gets smaller as you repay. Banks and SACCOs usually use this method.</p></details>
+        <details id="term-fees" class="term"><summary>Processing or facilitation fee</summary>
+          <p>A charge for arranging the loan. It is often taken from the money you receive, so you pay interest on money you never got.</p></details>
+        <details id="term-rate" class="term"><summary>Yearly cost rate (APR)</summary>
+          <p>All interest and fees turned into one yearly percentage, so a 30-day loan and a 12-month loan can be compared fairly. The lower it is, the cheaper the loan.</p></details>
+        <details id="term-penalty" class="term"><summary>Late-payment penalty</summary>
+          <p>Extra charges if you pay late or miss a payment. Ask exactly how they are calculated, because they can grow quickly.</p></details>
+        <details id="term-insurance" class="term"><summary>Credit life insurance</summary>
+          <p>Insurance that repays the loan if the borrower dies or becomes disabled. It is a real cost, so ask for the amount.</p></details>
+        <details id="term-excise" class="term"><summary>Excise duty</summary>
+          <p>A government tax charged on loan fees in Kenya. It is added on top of fees, so ask whether the quoted fees include it.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand">Loan<strong>Lens</strong></div>
+    <p>LoanLens explains loan terms. It does not lend money or tell you whether to borrow. Always confirm figures with your lender in writing.</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+
+  <template id="offer-form-template">
+    <fieldset class="offer-form">
+      <legend>
+        <input class="offer-name" name="name" aria-label="Offer name" placeholder="Offer name, e.g. Bank loan">
+        <button type="button" class="icon-btn remove-offer" aria-label="Remove this offer">✕</button>
+      </legend>
+
+      <div class="grid">
+        <label><span>Loan amount (KES)</span><input name="principal" type="number" min="0" step="any" inputmode="decimal" placeholder="e.g. 50000"></label>
+        <label><span>Interest rate (%)</span><input name="interestRatePercent" type="number" min="0" step="any" inputmode="decimal" placeholder="e.g. 10"></label>
+        <label><span>Rate applies per</span>
+          <select name="ratePeriod">
+            <option value="">Not stated</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+            <option value="week">Week</option>
+            <option value="term">Whole loan</option>
+          </select>
+        </label>
+        <label><span>Interest charged on <a href="#term-flat" class="q" data-term="term-flat" aria-label="What does this mean?">?</a></span>
+          <select name="interestMethod">
+            <option value="">Not stated</option>
+            <option value="reducing">Remaining balance</option>
+            <option value="flat">Original amount (flat)</option>
+          </select>
+        </label>
+        <label><span>You repay</span>
+          <select name="repaymentFrequency">
+            <option value="monthly">Monthly</option>
+            <option value="weekly">Weekly</option>
+            <option value="fortnightly">Every 2 weeks</option>
+            <option value="lump-sum">All at once</option>
+          </select>
+        </label>
+        <label class="installments-field"><span>Number of payments</span><input name="installments" type="number" min="1" step="1" inputmode="numeric" placeholder="e.g. 12"></label>
+        <label class="term-field" hidden><span>Loan length (days)</span><input name="termDays" type="number" min="1" step="1" inputmode="numeric" placeholder="e.g. 30"></label>
+      </div>
+
+      <div class="subsection">
+        <h4>Fees</h4>
+        <div class="fees"></div>
+        <button type="button" class="link add-fee">+ Add a fee</button>
+        <label class="check"><input type="checkbox" name="noFees"> The lender says there are no fees</label>
+      </div>
+
+      <details class="subsection">
+        <summary>What the lender told you <span class="muted">(optional, so LoanLens can check it)</span></summary>
+        <div class="grid">
+          <label><span>Amount you will receive</span><input name="stated.netDisbursed" type="number" min="0" step="any" inputmode="decimal"></label>
+          <label><span>Each repayment</span><input name="stated.installmentAmount" type="number" min="0" step="any" inputmode="decimal"></label>
+          <label><span>Total to repay</span><input name="stated.totalRepayment" type="number" min="0" step="any" inputmode="decimal"></label>
+          <label><span>APR (%)</span><input name="stated.aprPercent" type="number" min="0" step="any" inputmode="decimal"></label>
+        </div>
+        <div class="grid">
+          <label><span>Late-payment penalty</span>
+            <select name="penaltyStatus">
+              <option value="unknown">Not mentioned</option>
+              <option value="stated">Mentioned, with an amount</option>
+              <option value="vague">Mentioned, no amount given</option>
+              <option value="none">Lender says there are none</option>
+            </select>
+          </label>
+          <label class="penalty-amount" hidden><span>Penalty amount (KES)</span><input name="penaltyAmount" type="number" min="0" step="any" inputmode="decimal"></label>
+        </div>
+      </details>
+    </fieldset>
+  </template>
+
+  <template id="fee-row-template">
+    <div class="fee-row">
+      <input name="feeName" aria-label="Fee name" placeholder="e.g. Processing fee">
+      <input name="feeValue" type="number" min="0" step="any" inputmode="decimal" aria-label="Fee amount" placeholder="Amount, if given">
+      <select name="feeUnit" aria-label="Fee unit">
+        <option value="amount">KES</option>
+        <option value="percent">% of loan</option>
+      </select>
+      <select name="feeTiming" aria-label="When the fee is paid">
+        <option value="deducted">Taken from the loan</option>
+        <option value="upfront">Paid before you get it</option>
+        <option value="financed">Added to what you owe</option>
+        <option value="per-installment">Added to every repayment</option>
+      </select>
+      <button type="button" class="icon-btn remove-fee" aria-label="Remove fee">✕</button>
+    </div>
+  </template>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
